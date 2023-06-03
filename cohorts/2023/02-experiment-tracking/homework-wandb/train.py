@@ -1,6 +1,7 @@
 import os
 import pickle
 import click
+from typing import Any
 
 import wandb
 
@@ -8,9 +9,10 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
 
-def load_pickle(filename: str):
+def load_pickle(filename: str) -> Any:
     with open(filename, "rb") as f_in:
         return pickle.load(f_in)
+
 
 
 @click.command()
@@ -28,7 +30,7 @@ def run_train(
     data_artifact: str,
     max_depth: int,
     random_state: int,
-):
+) -> None:
     # Initialize a Weights & Biases run
     wandb.init(
         project=wandb_project,
@@ -37,25 +39,29 @@ def run_train(
         config={"max_depth": max_depth, "random_state": random_state},
     )
 
-    # Fetch the preprocessed dataset from artifacts
+    # Fetch the preprocessed dataset from artifacts previously created
     artifact = wandb.use_artifact(data_artifact, type="preprocessed_dataset")
     data_path = artifact.download()
 
     X_train, y_train = load_pickle(os.path.join(data_path, "train.pkl"))
     X_val, y_val = load_pickle(os.path.join(data_path, "val.pkl"))
 
-    # Define the XGBoost Regressor Mode, train the model and perform prediction
+    # Define the Random Forest Regressor model, train the model and perform prediction
     rf = RandomForestRegressor(max_depth=max_depth, random_state=random_state)
     rf.fit(X_train, y_train)
     y_pred = rf.predict(X_val)
 
-    mse = mean_squared_error(y_val, y_pred, squared=False)
-    # TODO: Log `mse` to Weights & Biases under the key `"MSE"`
+    mse = mean_squared_error(y_val, y_pred, squared=True)
+    # Log the 'mse' metric to W&B
+    wandb.log({"MSE": mse})
 
     with open("regressor.pkl", "wb") as f:
         pickle.dump(rf, f)
 
-    # TODO: Log `regressor.pkl` as an artifact of type `model`
+    # Log `regressor.pkl` as an artifact of type `model`
+    artifact_rf = wandb.Artifact(f"taxi-rf-model", type="model")
+    artifact_rf.add_file("regressor.pkl")
+    wandb.log_artifact(artifact_rf)
 
 
 if __name__ == "__main__":
