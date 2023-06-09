@@ -1,0 +1,12 @@
+data/
+.ipynb_checkpoints
+models/*
+mlruns/*
+.vscode/
+./DS_Store
+*.db
+*.DS_Store
+homework-wandb/*.pkl
+homework-wandb/output/*
+homework-wandb/wandb/*
+homework/polars/output/*
