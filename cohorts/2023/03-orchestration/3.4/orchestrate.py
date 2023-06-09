@@ -16,6 +16,7 @@ import os
 @task(retries=3, retry_delay_seconds=2)
 def read_data(filename: str) -> pl.DataFrame:
     """Read data into DataFrame"""
+    print("Hello --->" + os.getcwd())
     df = pl.read_parquet(filename)
     df = df.with_columns(
         (pl.col('lpep_dropoff_datetime') -
@@ -121,8 +122,6 @@ def main_flow(
     val_path: str = "../data/green_tripdata_2021-02.parquet",
 ) -> None:
     """The main training pipeline"""
-
-    print(os.getcwd())
 
     # MLflow settings
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
