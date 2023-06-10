@@ -1,0 +1,9 @@
+deployments:
+- name: taxi_local_data1
+  flow_name: cohorts/2023/03-orchestration/3.4/orchestrate.py:main_flow
+  work_pool: zoompool
+    name: zoompool
+- name: taxi_local_data2
+  flow_name: cohorts/2023/03-orchestration/3.4/orchestrate.py:main_flow
+  work_pool: zoompool
+    name: zoompool
