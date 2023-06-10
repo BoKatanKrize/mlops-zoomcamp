@@ -16,9 +16,7 @@ import os
 @task(retries=3, retry_delay_seconds=2)
 def read_data(filename: str) -> pl.DataFrame:
     """Read data into DataFrame"""
-    print("Hello---->")
-    print(os.listdir())
-    print("<----Hello")
+    print("Hello --->" + os.getcwd())
     df = pl.read_parquet(filename)
     df = df.with_columns(
         (pl.col('lpep_dropoff_datetime') -
