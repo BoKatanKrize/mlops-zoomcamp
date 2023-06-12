@@ -169,7 +169,7 @@ def main_flow_35(
     train_best_model(X_train, X_val, y_train, y_val, dv)
 
     # Send an email at the end of the flow
-    example_email_send_message('M3cHr3p71l@gmail.com')
+    # example_email_send_message('example@gmail.com')
 
 
 if __name__ == "__main__":
