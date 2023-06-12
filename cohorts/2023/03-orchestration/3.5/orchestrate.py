@@ -10,7 +10,20 @@ import mlflow
 import xgboost as xgb
 from prefect import flow, task
 from prefect.artifacts import create_markdown_artifact
+from prefect_email import EmailServerCredentials, email_send_message
 from datetime import date
+
+
+def example_email_send_message(email_address: str):
+    # Load email block ("gmail") created in Prefect Cloud
+    email_server_credentials = EmailServerCredentials.load("gmail")
+    subject = email_send_message.with_options(
+            name=f"email {email_address}").submit(
+            email_server_credentials=email_server_credentials,
+            subject="Example Flow Notification using Gmail",
+            msg="This proves email_send_message works!",
+            email_to=email_address,
+    )
 
 
 @task(retries=3, retry_delay_seconds=2)
@@ -154,6 +167,9 @@ def main_flow_35(
 
     # Train
     train_best_model(X_train, X_val, y_train, y_val, dv)
+
+    # Send an email at the end of the flow
+    example_email_send_message('M3cHr3p71l@gmail.com')
 
 
 if __name__ == "__main__":
