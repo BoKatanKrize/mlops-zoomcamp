@@ -1,3 +1,4 @@
 {
-  "main-flow": "cohorts/2023/03-orchestration/3.4/orchestrate.py:main_flow"
+  "main-flow": "cohorts/2023/03-orchestration/3.4/orchestrate.py:main_flow",
+  "main-flow-35": "cohorts/2023/03-orchestration/3.5/orchestrate.py:main_flow_35"
 }
