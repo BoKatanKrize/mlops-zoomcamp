@@ -62,4 +62,6 @@ df_result.to_parquet(
 # parameters: year and month.
 
 # Run the script for March 2022
+#     $ python starter.py 2022 3
+
 
