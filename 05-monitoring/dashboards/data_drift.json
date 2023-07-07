@@ -11,12 +11,6 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
-        "target": {
-          "limit": 100,
-          "matchAny": false,
-          "tags": [],
-          "type": "dashboard"
-        },
         "type": "dashboard"
       }
     ]
@@ -24,7 +18,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -39,6 +32,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -84,17 +79,18 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 12,
         "x": 0,
         "y": 0
       },
-      "id": 2,
+      "id": 123124,
       "options": {
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -107,35 +103,45 @@
             "type": "postgres",
             "uid": "PCC52D03280B7034C"
           },
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": false,
-          "rawSql": "SELECT\n  \"timestamp\" AS \"time\",\n  prediction_drift\nFROM dummy_metrics\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY 1",
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"timestamp\", prediction_drift FROM dummy_metrics LIMIT 50 ",
           "refId": "A",
-          "select": [
-            [
+          "sql": {
+            "columns": [
               {
-                "params": [
-                  "prediction_drift"
+                "parameters": [
+                  {
+                    "name": "\"timestamp\"",
+                    "type": "functionParameter"
+                  }
                 ],
-                "type": "column"
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "prediction_drift",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
               }
-            ]
-          ],
-          "table": "dummy_metrics",
-          "timeColumn": "\"timestamp\"",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "dummy_metrics"
         }
       ],
-      "title": "Prediction Drift",
+      "title": "Prediction drift",
       "type": "timeseries"
     },
     {
@@ -146,9 +152,12 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "dark-purple",
+            "mode": "fixed"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -191,23 +200,7 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "share_missing_values"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "purple",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -215,12 +208,13 @@
         "x": 12,
         "y": 0
       },
-      "id": 6,
+      "id": 123126,
       "options": {
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -233,32 +227,42 @@
             "type": "postgres",
             "uid": "PCC52D03280B7034C"
           },
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": false,
-          "rawSql": "SELECT\n  \"timestamp\" AS \"time\",\n  share_missing_values\nFROM dummy_metrics\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY 1",
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"timestamp\", share_missing_values FROM dummy_metrics LIMIT 50 ",
           "refId": "A",
-          "select": [
-            [
+          "sql": {
+            "columns": [
               {
-                "params": [
-                  "share_missing_values"
+                "parameters": [
+                  {
+                    "name": "\"timestamp\"",
+                    "type": "functionParameter"
+                  }
                 ],
-                "type": "column"
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "share_missing_values",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
               }
-            ]
-          ],
-          "table": "dummy_metrics",
-          "timeColumn": "\"timestamp\"",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "dummy_metrics"
         }
       ],
       "title": "Share of missing values",
@@ -272,9 +276,12 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "fixedColor": "dark-yellow",
+            "mode": "fixed"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -317,36 +324,21 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "num_drifted_columns"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "yellow",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 8
       },
-      "id": 4,
+      "id": 123125,
       "options": {
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -359,52 +351,202 @@
             "type": "postgres",
             "uid": "PCC52D03280B7034C"
           },
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": false,
-          "rawSql": "SELECT\n  \"timestamp\" AS \"time\",\n  num_drifted_columns\nFROM dummy_metrics\nWHERE\n  $__timeFilter(\"timestamp\")\nORDER BY 1",
+          "editorMode": "builder",
+          "format": "table",
+          "rawSql": "SELECT \"timestamp\", num_drifted_columns FROM dummy_metrics LIMIT 50 ",
           "refId": "A",
-          "select": [
-            [
+          "sql": {
+            "columns": [
               {
-                "params": [
-                  "num_drifted_columns"
+                "parameters": [
+                  {
+                    "name": "\"timestamp\"",
+                    "type": "functionParameter"
+                  }
                 ],
-                "type": "column"
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "num_drifted_columns",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
               }
-            ]
-          ],
-          "table": "dummy_metrics",
-          "timeColumn": "\"timestamp\"",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "dummy_metrics"
         }
       ],
-      "title": "Number of Drifted Columns",
+      "title": "Number of drifted columns",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 1,
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
+      "type": "welcome"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 123123,
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
+      "type": "gettingstarted"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 12,
+        "x": 0,
+        "y": 28
+      },
+      "id": 3,
+      "links": [],
+      "options": {
+        "folderId": 0,
+        "includeVars": false,
+        "keepTime": false,
+        "maxItems": 30,
+        "query": "",
+        "showHeadings": true,
+        "showRecentlyViewed": true,
+        "showSearch": false,
+        "showStarred": true,
+        "tags": []
+      },
+      "pluginVersion": "10.0.1",
+      "tags": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Dashboards",
+      "type": "dashlist"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 12,
+        "x": 12,
+        "y": 28
+      },
+      "id": 4,
+      "links": [],
+      "options": {
+        "feedUrl": "https://grafana.com/blog/news.xml",
+        "showImage": true
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Latest from the blog",
+      "type": "news"
     }
   ],
-  "schemaVersion": 36,
+  "refresh": false,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "2022-01-22T05:42:46.872Z",
-    "to": "2022-02-18T03:36:41.895Z"
+    "from": "2022-02-01T00:00:00.000Z",
+    "to": "2022-02-27T00:00:00.000Z"
   },
-  "timepicker": {},
-  "timezone": "",
-  "title": "New dashboard",
-  "uid": "NPXSRpQ4z",
-  "version": 1,
+  "timepicker": {
+    "hidden": true,
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ],
+    "type": "timepicker"
+  },
+  "timezone": "browser",
+  "title": "Home",
+  "version": 0,
   "weekStart": ""
 }
