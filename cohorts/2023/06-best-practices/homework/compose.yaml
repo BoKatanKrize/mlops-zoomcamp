@@ -1,0 +1,14 @@
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3   
+      
+# To start the LocalStack with the S3 service
+#	docker compose up
+# To create a S3 bucket with LocalStack
+# 	aws --endpoint-url=http://localhost:4566 s3 mb s3://nyc-duration
+# To check the bucket has been sucessfully created:
+# 	aws --endpoint-url=http://localhost:4566 s3 ls
