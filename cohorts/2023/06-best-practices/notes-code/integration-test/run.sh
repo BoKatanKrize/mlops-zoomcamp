@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-cd "$(dirname "$0")"
+if [[ -z "${GITHUB_ACTIONS}" ]]; then
+  cd "$(dirname "$0")"
+fi
 
 
 LOCAL_TAG=`date +"%Y-%m-%d-%H-%M"`
@@ -11,7 +13,7 @@ docker build -t ${LOCAL_IMAGE_NAME} ..
 
 docker compose up -d
 
-sleep 1
+sleep 5
 
 aws --endpoint-url=http://localhost:4566       \
       kinesis create-stream                    \
